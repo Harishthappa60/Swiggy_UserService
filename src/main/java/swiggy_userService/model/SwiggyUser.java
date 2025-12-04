@@ -19,4 +19,5 @@ public class SwiggyUser {
     private String password;
     private String phone;
 
+
 }

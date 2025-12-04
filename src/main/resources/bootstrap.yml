@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: swiggy_userService
+  cloud:
+   config:
+      import: config_server:http://localhost:8882/swiggy_userService/default
