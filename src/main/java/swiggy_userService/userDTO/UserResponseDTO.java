@@ -1,6 +1,6 @@
 package swiggy_userService.userDTO;
 
-import lombok.Data;
+
 
 public class UserResponseDTO {
     private String name;
