@@ -4,10 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 
 
 @Entity
-
+@Builder
 public class SwiggyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -15,17 +16,17 @@ public class SwiggyUser {
     private String name;
     private String email;
     private String password;
-    private String phone;
+    private String phoneNumber  ;
 
     public SwiggyUser() {
     }
 
-    public SwiggyUser(Long id, String name, String email, String password, String phone) {
+    public SwiggyUser(Long id, String name, String email, String password, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
     }
 
     public Long getId() {
@@ -60,11 +61,11 @@ public class SwiggyUser {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

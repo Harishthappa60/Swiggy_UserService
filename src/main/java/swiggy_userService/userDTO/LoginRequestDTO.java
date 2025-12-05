@@ -1,6 +1,8 @@
 package swiggy_userService.userDTO;
 
+import lombok.Builder;
 
+@Builder
 public class LoginRequestDTO {
     private String email;
     private String password;

@@ -1,11 +1,23 @@
 package swiggy_userService.userDTO;
 
+import lombok.Builder;
 
+@Builder
 public class UserRequestDTO {
     private String name;
     private String email;
     private String password;
-    private String phone;
+    private String phoneNumber;
+
+    public UserRequestDTO() {
+    }
+
+    public UserRequestDTO(String name, String email, String password, String phoneNumber) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+    }
 
     public String getName() {
         return name;
@@ -31,11 +43,11 @@ public class UserRequestDTO {
         this.password = password;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

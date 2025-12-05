@@ -7,5 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<SwiggyUser,Long> {
+   boolean existsByEmail(String email);
    Optional<SwiggyUser> findByEmail(String email);
 }

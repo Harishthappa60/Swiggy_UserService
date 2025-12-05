@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import swiggy_userService.service.UserService;
 import swiggy_userService.userDTO.LoginRequestDTO;
 import swiggy_userService.userDTO.UserRequestDTO;
+import swiggy_userService.userDTO.UserResponseDTO;
 
 import java.util.List;
 
@@ -19,23 +20,23 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserRequestDTO> register(@RequestBody UserRequestDTO dto){
+    public ResponseEntity<UserResponseDTO> register(@RequestBody UserRequestDTO dto){
         return ResponseEntity.ok(service.register(dto));
     }
     @PostMapping("/login")
-    public ResponseEntity<UserRequestDTO>login(@RequestBody LoginRequestDTO dto){
+    public ResponseEntity<UserResponseDTO>login(@RequestBody LoginRequestDTO dto){
         return ResponseEntity.ok(service.login(dto));
     }
     @GetMapping("/getAll")
-    public ResponseEntity<List<UserRequestDTO>> getall(){
+    public ResponseEntity<List<UserResponseDTO>> getAll(){
         return ResponseEntity.ok(service.getAllUsers());
     }
     @GetMapping("/getById")
-    public ResponseEntity<UserRequestDTO>getById(@RequestParam Long id){
+    public ResponseEntity<UserResponseDTO>getById(@RequestParam Long id){
         return ResponseEntity.ok(service.getUserById(id));
     }
     @PatchMapping("/update")
-    public ResponseEntity<UserRequestDTO> updateUser(@RequestParam Long id, @RequestBody UserRequestDTO dto){
+    public ResponseEntity<UserResponseDTO> updateUser(@RequestParam Long id, @RequestBody UserRequestDTO dto){
         return ResponseEntity.ok(service.updateUser(id,dto));
     }
     @DeleteMapping("/delete")

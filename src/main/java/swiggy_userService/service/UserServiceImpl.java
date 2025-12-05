@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import swiggy_userService.model.SwiggyUser;
 import swiggy_userService.userDTO.LoginRequestDTO;
 import swiggy_userService.userDTO.UserRequestDTO;
+import swiggy_userService.userDTO.UserResponseDTO;
 import swiggy_userService.userRepository.UserRepository;
 
 import java.util.List;
@@ -19,72 +20,64 @@ public class UserServiceImpl implements UserService{
         this.repository = repository;
     }
 
-    //convert entity to dto
-    private UserRequestDTO convertToDTO(SwiggyUser user){
-        UserRequestDTO dto=new UserRequestDTO();
-        dto.setName(user.getName());
-        dto.setEmail(user.getEmail());
-        dto.setEmail(user.getEmail());
-        dto.setPassword(user.getPassword());
-        return dto;
-    }
-    //Converto DTO to Entity
+    //ConvertToDTO to Entity
 
-    private SwiggyUser convertToEntity(UserRequestDTO dto){
-        SwiggyUser user=new SwiggyUser();
-        user.setName(dto.getName());
-        user.setPhone(dto.getPhone());
-        user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
-        return user;
+    private UserResponseDTO convertToResponse(SwiggyUser user){
+        return UserResponseDTO.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .phoneNumber(user.getPhoneNumber())
+                .email(user.getEmail())
+                .build();
     }
 
-    public UserRequestDTO register(UserRequestDTO req) {
+    public UserResponseDTO register(UserRequestDTO req) {
         repository.findByEmail(req.getEmail()).ifPresent(U->{
             throw new RuntimeException("Email already Exists");
         });
-        SwiggyUser user=new SwiggyUser();
-        user.setName(req.getName());
-        user.setPhone(req.getPhone());
-        user.setEmail(req.getEmail());
-        user.setPassword(req.getPassword());
-        return convertToDTO(repository.save(user));
+        SwiggyUser user=SwiggyUser.builder()
+                .name(req.getName())
+                .phoneNumber(req.getPhoneNumber())
+                .email(req.getEmail())
+                .password(req.getPassword())
+                .build();
+
+        return convertToResponse(repository.save(user));
     }
 
     @Override
-    public UserRequestDTO login(LoginRequestDTO req) {
+    public UserResponseDTO login(LoginRequestDTO req) {
         SwiggyUser user=repository.findByEmail(req.getEmail()).orElseThrow(()->new RuntimeException("User oot found"));
         if (!user.getPassword().equals(req.getPassword())){
             throw new RuntimeException("Incorrect Password");
         }
-        return convertToDTO(user);
+        return convertToResponse(user);
     }
 
     @Override
-    public List<UserRequestDTO> getAllUsers() {
-        return repository.findAll().stream()
-                .map(this::convertToDTO)
+    public List<UserResponseDTO> getAllUsers() {
+        return repository.findAll().stream().map(this::convertToResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public UserRequestDTO getUserById(Long id) {
+    public UserResponseDTO getUserById(Long id) {
         SwiggyUser user= repository.findById(id).orElseThrow(()->new RuntimeException("User not  found"));
-        return convertToDTO(user);
+        return convertToResponse(user);
     }
 
     @Override
-    public UserRequestDTO updateUser(Long id, UserRequestDTO req) {
+    public UserResponseDTO updateUser(Long id, UserRequestDTO req) {
        SwiggyUser user=repository.findById(id).orElseThrow(()->new RuntimeException("User not found"));
        if (req.getName()!=null)
            user.setName(req.getName());
-       if (req.getPhone()!=null)
-           user.setPhone(req.getPhone());
+       if (req.getPhoneNumber()!=null)
+           user.setPhoneNumber(req.getPhoneNumber());
        if (req.getEmail()!=null)
            user.setEmail(req.getEmail());
        if (req.getPassword()!=null)
            user.setPassword(req.getPassword());
-        return convertToDTO(repository.save(user));
+        return convertToResponse(repository.save(user));
     }
 
     @Override

@@ -1,11 +1,31 @@
 package swiggy_userService.userDTO;
 
+import lombok.Builder;
 
-
+@Builder
 public class UserResponseDTO {
+    private Long id;
     private String name;
     private String email;
-    private String phone;
+    private String phoneNumber;
+
+    public UserResponseDTO() {
+    }
+
+    public UserResponseDTO(Long id, String name, String email, String phoneNumber) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -23,11 +43,11 @@ public class UserResponseDTO {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
